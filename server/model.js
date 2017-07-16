@@ -17,8 +17,10 @@ const Task = seq.define('task', {
 const User = seq.define('user', {
     email: Seq.STRING,
     password: Seq.STRING,
-    isAdmin: Seq.BOOLEAN
+    isAdmin: Seq.BOOLEAN,
+    lastChange: Seq.DATE
 });
+
 
 Task.belongsTo(User);
 User.hasMany(Task);

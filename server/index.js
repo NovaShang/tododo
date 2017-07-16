@@ -13,4 +13,5 @@ if (process.argv[2] === 'migrate') {
     app.use(bodyparser());
     app.use(router.routes());
     app.listen(1231);
+    console.log('Tododo Server Started At http://localhost:1231');
 }

@@ -3,29 +3,13 @@
 const api = new(require('koa-router'))();
 const model = require('./model');
 const uuid = require('uuid');
-const cryptoPassword = x => require('crypto').createHmac('sha256', 'tododo').update(ctx.request.body.password).digest('hex');
+const cryptoPassword = x => require('crypto').createHmac('sha256', 'tododo').update(x).digest('hex');
 const tokens = new Map();
 
-api.use(async(ctx, next) => {
-    if (!ctx.request.header.authorization) {
-        return;
-    }
-    if (!tokens.has(ctx.request.header.authorization)) {
-        return;
-    }
-    token = ctx.request.header.authorization;
-    if (tokens.get(token).retire < Date.now) {
-        tokens.delete(token);
-        return;
-    }
-    ctx.isAuthed = true;
-    ctx.user = tokens.get(token).user;
-    await next();
-});
 
-api.post('/auth', async cyx => {
+api.post('/auth', async ctx => {
     let data = ctx.request.body;
-    if (!(body.password && body.email)) {
+    if (!(data.password && data.email)) {
         ctx.body = { result: 'failed', message: 'parameters incomplete' };
         ctx.status = 400;
         return;
@@ -38,7 +22,8 @@ api.post('/auth', async cyx => {
     }
     if (user.password === cryptoPassword(data.password)) {
         let token = uuid.v1().replace(/-/g, '');
-        tokens.set(token, { retire: Date.now(), user: user });
+        tokens.set(token, { retire: Date.now() + 7 * 24 * 3600 * 1000, user: user });
+        ctx.body = { result: 'success', token: token };
     } else {
         ctx.body = { result: 'failed', message: 'password incorrect' };
         ctx.status = 400;
@@ -48,7 +33,7 @@ api.post('/auth', async cyx => {
 
 api.post('/users', async ctx => {
     let data = ctx.request.body;
-    if (!(body.password && body.email)) {
+    if (!(data.password && data.email)) {
         ctx.body = { result: 'failed', message: 'parameters incomplete' };
         ctx.status = 400;
         return;
@@ -61,6 +46,29 @@ api.post('/users', async ctx => {
     let user = await model.User.create({ email: data.email, password: cryptoPassword(data.password) });
     ctx.body = { result: 'success', uid: user.id };
 });
+
+/**
+ * 
+ */
+api.use(async(ctx, next) => {
+    if (!ctx.request.header.authorization) {
+        ctx.status = 502;
+        return;
+    }
+    if (!tokens.has(ctx.request.header.authorization)) {
+        ctx.status = 502;
+        return;
+    }
+    let token = ctx.request.header.authorization;
+    if (tokens.get(token).retire < Date.now) {
+        tokens.delete(token);
+        return;
+    }
+    ctx.isAuthed = true;
+    ctx.user = tokens.get(token).user;
+    await next();
+});
+
 
 api.get('/tasks', async ctx => {
     if (!ctx.isAuthed) {

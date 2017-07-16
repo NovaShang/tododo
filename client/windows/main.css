@@ -1,0 +1,248 @@
+body {
+    font-size: 14px;
+    background-color: #EEE;
+    color: #111;
+    border: 1px solid #1379BE;
+    margin: 0px;
+    padding: 0px;
+}
+
+input,
+textarea,
+body {
+    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+
+.topside {
+    background: linear-gradient(to right, #1379BE, #2B9DAA);
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.topside .bold {
+    color: white;
+}
+
+.titlebar {
+    -webkit-app-region: drag;
+    display: flex;
+    flex-direction: row;
+}
+
+.titlebar>.title {
+    padding: 8px 12px;
+    flex-grow: 1;
+}
+
+.titlebar>.controlbox {
+    -webkit-app-region: no-drag;
+    display: flex;
+    flex-direction: row;
+}
+
+.titlebar>.controlbox>button {
+    padding: 6px 12px;
+    transition: all 0.2s;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.titlebar>.controlbox>button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.titlebar>.controlbox>button:active {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.titlebar>.controlbox>button>img {
+    height: 16px;
+    width: 16px;
+}
+
+.bar {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bar-folded {
+    height: 0px;
+    overflow-y: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #1379BE;
+}
+
+#add-extra {}
+
+.bar-expanded {
+    height: 200px;
+    display: flex;
+    opacity: 100;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.input-group>.major {
+    flex-grow: 1;
+}
+
+.input-group>input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input-group>button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    transition: all 0.2s;
+}
+
+.input-group>button>img {
+    height: 16px;
+    width: 16px;
+    transition: all 0.5s;
+}
+
+.input-group-inv>input {
+    color: white;
+}
+
+.input-group-inv>button {
+    color: white;
+}
+
+.input-group-inv>button:hover {
+    background-color: rgba(255, 255, 255, 0.4)
+}
+
+.input-group-inv>button:active {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.input-group-inv {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.input-group-inv>button:hover {
+    background-color: rgba(255, 255, 255, 0.4)
+}
+
+.input-group-inv>button:active {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.input-group-normal>input {
+    color: #333;
+}
+
+.input-group-normal>button {
+    color: #1379BE;
+}
+
+.input-group-normal>button:hover {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+.input-group-normal>button:active {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.input-group-normal {
+    border-bottom: 2px solid #1379BE
+}
+
+.input-group-normal>button:hover {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+.input-group-normal>button:active {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.rotation180 {
+    transform: rotate(180deg);
+}
+
+.textarea {
+    background-color: transparent;
+    outline: none;
+    border: 1px solid #1379BE;
+    color: #333;
+}
+
+#newTaskContent {
+    margin-top: 10px;
+    flex-grow: 1;
+    resize: none;
+}
+
+.outline-button {
+    font-size: 0.8rem;
+    border-radius: 3px;
+    padding: 1px 3px;
+    margin: 3px;
+}
+
+.outline-button-blue {
+    border: 1px solid #1379BE;
+    color: #1379BE;
+}
+
+.outline-button-gray {
+    border: 1px solid #666;
+    color: #666;
+}
+
+.outline-button-red {
+    border: 1px solid rgb(200, 72, 74);
+    color: rgb(200, 72, 74);
+    ;
+}
+
+.tab-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+.tab-bar>button {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid transparent;
+    padding: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.2s;
+}
+
+.tab-bar>button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.tab-bar>.active {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2));
+}
+
+.tab-bar>button>img {
+    height: 24px;
+    width: 24px;
+}

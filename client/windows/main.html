@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="topside">
+            <div id="titlebar" class="titlebar">
+                <div id="window-title" class="title">
+                    <span class="bold">ToDoDo</span> by Nova
+                </div>
+                <div id="controlbox" class="controlbox">
+                    <button id="controlbox-pin-button"><img src="../assets/pin.svg"></button>
+                    <button id="controlbox-close-button"><img src="../assets/close.svg"></button>
+                </div>
+            </div>
+            <div id="add-bar" class="bar">
+                <div class="input-group input-group-inv">
+                    <input type="text" v-model="newTask.title" class="major input" placeholder="添加新任务">
+                    <button @click="showAddExtra=!showAddExtra"><img v-bind:class="{'rotation180':showAddExtra}" src="../assets/down.svg"></button>
+                    <button @click="addTask()"><img src="../assets/add.svg"></button>
+                </div>
+                <div id="add-bar-ex" v-bind:class="['bar','bar-folded',{'bar-expanded':showAddExtra}]">
+                    <div class="input-group input-group-normal">
+                        <input type="date" class="major" v-model="newTask.deadline">
+                        <a class="outline-button outline-button-gray" v-show="newTask.importance===0" @click="newTask.importance=1" id="importanceButton">次要</a>
+                        <a class="outline-button outline-button-blue" v-show="newTask.importance===1" @click="newTask.importance=2" id="importanceButton">普通</a>
+                        <a class="outline-button outline-button-red" v-show="newTask.importance===2" @click="newTask.importance=0" id="importanceButton">重要</a>
+                    </div>
+                    <textarea class="textarea" id="newTaskContent"></textarea>
+                </div>
+            </div>
+
+            <div class="tab-bar">
+                <button><img src="../assets/calendar.svg"></button>
+                <button class="active"><img src="../assets/tasklist.svg"></button>
+                <button><img src="../assets/all.svg"></button>
+            </div>
+
+        </div>
+        <div class="bottomside">
+            <div class="list-container">
+                {{test}}
+
+            </div>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+
+</body>
+
+</html>
