@@ -17,27 +17,30 @@ const app = new Vue({
         newTask: {
             title: "",
             content: "",
-            deadline: "",
+            deadLine: "",
             importance: 1
         },
         tasks: []
 
     },
+    created: function() {
+        this.refreshTasks();
 
+    },
     methods: {
-        addTask: function() {
-            resTask.save({}, this.newTask).then((data) => {
-                this.refreshTasks();
-            }, (data) => {
-
-            });
+        addTask: async function() {
+            let data = await resTask.save({}, this.newTask);
+            await this.refreshTasks();
+            this.newTask = {
+                title: "",
+                content: "",
+                deadLine: "",
+                importance: 1
+            }
         },
-        refreshTasks: function() {
-            resTask.query().then((data) => {
-                this.tasks = data.body
-            }, (data) => {
-
-            });
+        refreshTasks: async function() {
+            let data = await resTask.query();
+            this.tasks = data.body;
         },
         refreshTask: function(task) {
             resTask.query({ id: task.id }).then();

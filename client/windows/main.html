@@ -24,12 +24,12 @@
                 </div>
                 <div id="add-bar-ex" v-bind:class="['bar','bar-folded',{'bar-expanded':showAddExtra}]">
                     <div class="input-group input-group-normal">
-                        <input type="date" class="major" v-model="newTask.deadline">
+                        <input type="date" class="major" v-model="newTask.deadLine">
                         <a class="outline-button outline-button-gray" v-show="newTask.importance===0" @click="newTask.importance=1" id="importanceButton">次要</a>
                         <a class="outline-button outline-button-blue" v-show="newTask.importance===1" @click="newTask.importance=2" id="importanceButton">普通</a>
                         <a class="outline-button outline-button-red" v-show="newTask.importance===2" @click="newTask.importance=0" id="importanceButton">重要</a>
                     </div>
-                    <textarea class="textarea" id="newTaskContent"></textarea>
+                    <textarea v-model="newTask.content" class="textarea" id="newTaskContent"></textarea>
                 </div>
             </div>
 
@@ -42,7 +42,9 @@
         </div>
         <div class="bottomside">
             <div class="list-container">
-                {{test}}
+                <div v-for="task in tasks">
+                    {{task.title}}
+                </div>
 
             </div>
         </div>

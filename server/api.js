@@ -47,9 +47,8 @@ api.post('/users', async ctx => {
     ctx.body = { result: 'success', uid: user.id };
 });
 
-/**
- * 
- */
+
+
 api.use(async(ctx, next) => {
     if (!ctx.request.header.authorization) {
         ctx.status = 502;
@@ -76,7 +75,7 @@ api.get('/tasks', async ctx => {
         ctx.status = 401;
         return;
     }
-    let condition = { user_id: ctx.user.id };
+    let condition = { userId: ctx.user.id };
     if (!ctx.params.canceled) {
         condition.canceled = { $not: true };
     }
@@ -98,7 +97,7 @@ api.post('/tasks', async ctx => {
         ctx.status = 400;
         return;
     }
-    let task = await model.Task.findOne({ where: { id: ctx.params.id, user_id: ctx.user.id } });
+    let task = await model.Task.findOne({ where: { id: ctx.params.id, userId: ctx.user.id } });
     if (task) {
         ctx.body = { result: 'failed', message: 'task exists' };
         ctx.status = 400;
@@ -116,15 +115,15 @@ api.put('/tasks/:id', async ctx => {
         ctx.status = 401;
         return;
     }
-    var data = ctx.request.body;
+    let data = ctx.request.body;
     data.id = undefined;
-    data.user_id = ctx.user.id;
+    data.userId = ctx.user.id;
     if (!(data && data.title)) {
         ctx.body = { result: 'failed', message: 'parameters incomplete' };
         ctx.status = 400;
         return;
     }
-    let task = await model.Task.findOne({ where: { id: ctx.params.id, user_id: ctx.user.id } });
+    let task = await model.Task.findOne({ where: { id: ctx.params.id, userId: ctx.user.id } });
     if (!task) {
         ctx.body = { result: 'failed', message: 'task doesn\'t exists' };
         ctx.status = 400;
@@ -140,7 +139,7 @@ api.get('/tasks/:id', async ctx => {
         ctx.status = 401;
         return;
     }
-    let task = await model.Task.findOne({ where: { id: ctx.params.id, user_id: ctx.user.id } });
+    let task = await model.Task.findOne({ where: { id: ctx.params.id, userId: ctx.user.id } });
     if (!task) {
         ctx.body = { result: 'failed', message: 'task doesn\'t exists' };
         ctx.status = 400;
