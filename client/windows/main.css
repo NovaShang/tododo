@@ -1,7 +1,9 @@
+/* 全局设置 */
+
 body {
     font-size: 14px;
-    background-color: #EEE;
-    color: #111;
+    background-color: #EBEBEB;
+    color: #444;
     border: 1px solid #1379BE;
     margin: 0px;
     padding: 0px;
@@ -10,82 +12,43 @@ body {
 input,
 textarea,
 body {
-    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+    font-family: '微软雅黑', Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
 }
 
-.topside {
-    background: linear-gradient(to right, #1379BE, #2B9DAA);
-    color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
-}
-
-.topside .bold {
-    color: white;
-}
-
-.titlebar {
-    -webkit-app-region: drag;
-    display: flex;
-    flex-direction: row;
-}
-
-.titlebar>.title {
-    padding: 8px 12px;
-    flex-grow: 1;
-}
-
-.titlebar>.controlbox {
-    -webkit-app-region: no-drag;
-    display: flex;
-    flex-direction: row;
-}
-
-.titlebar>.controlbox>button {
-    padding: 6px 12px;
-    transition: all 0.2s;
+input,
+button,
+textarea {
     outline: none;
     border: none;
     background-color: transparent;
+    transition: all 0.2s;
 }
 
-.titlebar>.controlbox>button:hover {
-    background-color: rgba(255, 255, 255, 0.4);
+
+/* 界面上通用的一行 */
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
 }
 
-.titlebar>.controlbox>button:active {
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-.titlebar>.controlbox>button>img {
-    height: 16px;
-    width: 16px;
-}
-
-.bar {
+.col {
     padding: 10px;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
 }
 
-.bar-folded {
-    height: 0px;
-    overflow-y: hidden;
-    opacity: 0;
-    transition: all 0.2s;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #1379BE;
+
+/* 旋转 */
+
+.rotation180 {
+    transform: rotate(180deg);
 }
 
-#add-extra {}
 
-.bar-expanded {
-    height: 200px;
-    display: flex;
-    opacity: 100;
-}
+/* 输入控件组 */
 
 .input-group {
     display: flex;
@@ -96,19 +59,8 @@ body {
     flex-grow: 1;
 }
 
-.input-group>input {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    transition: all 0.2s;
-}
-
 .input-group>button {
-    background-color: transparent;
-    border: none;
-    outline: none;
     padding: 5px 10px;
-    transition: all 0.2s;
 }
 
 .input-group>button>img {
@@ -173,9 +125,8 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.rotation180 {
-    transform: rotate(180deg);
-}
+
+/* 通用的文本区域 */
 
 .textarea {
     background-color: transparent;
@@ -184,17 +135,15 @@ body {
     color: #333;
 }
 
-#newTaskContent {
-    margin-top: 10px;
-    flex-grow: 1;
-    resize: none;
-}
+
+/* 单边线的按钮 */
 
 .outline-button {
     font-size: 0.8rem;
     border-radius: 3px;
     padding: 1px 3px;
     margin: 3px;
+    transition: all 0.2s;
 }
 
 .outline-button-blue {
@@ -202,9 +151,19 @@ body {
     color: #1379BE;
 }
 
+.outline-button-blue:hover {
+    color: white;
+    background-color: #1379BE
+}
+
 .outline-button-gray {
     border: 1px solid #666;
     color: #666;
+}
+
+.outline-button-gray:hover {
+    color: white;
+    background-color: #666
 }
 
 .outline-button-red {
@@ -212,6 +171,94 @@ body {
     color: rgb(200, 72, 74);
     ;
 }
+
+.outline-button-red:hover {
+    color: white;
+    background-color: rgb(200, 72, 74);
+}
+
+
+/* 功能区 */
+
+.function-area {
+    background: linear-gradient(to right, #1379BE, #2B9DAA);
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+    z-index: 999;
+}
+
+
+/* 标题栏 */
+
+.title-bar .brand {
+    color: white;
+}
+
+.title-bar {
+    -webkit-app-region: drag;
+    display: flex;
+    flex-direction: row;
+}
+
+.title-bar>.title {
+    padding: 8px 12px;
+    flex-grow: 1;
+}
+
+.title-bar>.control-box {
+    -webkit-app-region: no-drag;
+    display: flex;
+    flex-direction: row;
+}
+
+.title-bar>.control-box>button {
+    padding: 6px 12px;
+}
+
+.title-bar>.control-box>button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.title-bar>.control-box>button:active {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.title-bar>.control-box>button>img {
+    height: 16px;
+    width: 16px;
+}
+
+
+/* 添加任务面板 */
+
+.add-task-panel {
+    height: 0px;
+    overflow-y: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #1379BE;
+    padding: 0px;
+}
+
+.add-task-panel-expanded {
+    height: 200px;
+    opacity: 100;
+    padding: 10px;
+}
+
+.task-content {
+    margin-top: 10px;
+    flex-grow: 1;
+    resize: none;
+}
+
+
+/* 标签栏 */
 
 .tab-bar {
     display: flex;
@@ -223,13 +270,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: transparent;
-    border: none;
-    outline: none;
     border-bottom: 3px solid transparent;
     padding: 10px;
     color: rgba(255, 255, 255, 0.8);
-    transition: all 0.2s;
 }
 
 .tab-bar>button:hover {
@@ -245,4 +288,159 @@ body {
 .tab-bar>button>img {
     height: 24px;
     width: 24px;
+}
+
+
+/* 窗口内容区 */
+
+.content-area {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+}
+
+
+/* 任务列表 */
+
+.tasklist-item {
+    padding: 10px;
+    margin: 5px;
+    background-color: #F5F5F5;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid #CCC;
+    transition: all 0.4s;
+}
+
+.tasklist-item:hover {
+    box-shadow: 0px 2px 8px 1px rgba(0, 0, 0, 0.3);
+}
+
+.tasklist-item-singleline {
+    height: 24px;
+}
+
+.tasklist-item-multiline {
+    height: 70px;
+}
+
+.tasklist-item-expand {
+    height: 280px;
+}
+
+.tasklist-item>.checkbox {
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    padding: 0px;
+    flex-shrink: 0;
+}
+
+.tasklist-item>.checkbox-red {
+    border: 2px solid rgb(200, 72, 74);
+}
+
+.tasklist-item>.checkbox-blue {
+    border: 2px solid #1379BE;
+}
+
+.tasklist-item>.checkbox-gray {
+    border: 2px solid #666;
+}
+
+.tasklist-item>.checkbox:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tasklist-item>.checkbox>.solid {
+    background: linear-gradient(to right, #1379BE, #2B9DAA);
+    opacity: 0;
+    height: 0px;
+    width: 0px;
+    margin: auto;
+    border-radius: 3px;
+    transition: all 0.4s;
+}
+
+.tasklist-item>.checkbox>.checked {
+    opacity: 100;
+    height: 80%;
+    width: 80%;
+}
+
+.tasklist-item .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tasklist-item .title {
+    margin: 0px;
+    padding: 0px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 16px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    width: 10px;
+}
+
+.tasklist-item .bar {
+    margin-top: 2px;
+    padding: 0px;
+    flex-shrink: 0;
+}
+
+.tasklist-item .taskcontent {
+    overflow-y: hidden;
+    max-height: 38px;
+}
+
+.command-button {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+
+/* 工具栏 */
+
+.toobar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.toobar-button {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.toobar-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.toobar-button:active {
+    background-color: white;
+}
+
+.toobar-button img {
+    height: 20px;
+    width: 20px;
+    margin: 2px;
+}
+
+.toolbar-pagger {
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

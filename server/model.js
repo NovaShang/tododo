@@ -11,7 +11,8 @@ const Task = seq.define('task', {
     done: Seq.BOOLEAN,
     canceled: Seq.BOOLEAN,
     content: Seq.TEXT,
-    deadLine: Seq.DATE
+    deadLine: Seq.DATE,
+    doneDate: Seq.DATE
 });
 
 const User = seq.define('user', {

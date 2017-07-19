@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "date-utils": "^1.2.21",
     "electron": "^1.6.11",
+    "lodash": "^4.17.4",
     "vue": "^2.3.4",
     "vue-resource": "^1.3.4"
   }

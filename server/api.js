@@ -6,7 +6,6 @@ const uuid = require('uuid');
 const cryptoPassword = x => require('crypto').createHmac('sha256', 'tododo').update(x).digest('hex');
 const tokens = new Map();
 
-
 api.post('/auth', async ctx => {
     let data = ctx.request.body;
     if (!(data.password && data.email)) {
@@ -75,14 +74,35 @@ api.get('/tasks', async ctx => {
         ctx.status = 401;
         return;
     }
-    let condition = { userId: ctx.user.id };
-    if (!ctx.params.canceled) {
-        condition.canceled = { $not: true };
+    let condition = { $and: [{ userId: ctx.user.id }, { $or: [{ $and: [{ canceled: { $not: true } }] }] }] };
+    if (!(ctx.query.done == "true")) {
+        condition.$and[1].$or[0].$and.push({ done: { $not: true } });
     }
-    if (!ctx.params.done) {
-        condition.done = { $not: true };
+    if (!(ctx.query.undone != "false")) {
+        condition.$and[1].$or[0].$and.push({ done: true });
     }
-    ctx.body = await model.Task.findAll({ where: condition });
+    if (ctx.query.canceled == "true") {
+        condition.$and[1].$or.push({ canceled: true });
+    }
+    let result = await model.Task.findAll({
+        where: condition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    if (ctx.query.order != false) {
+        result.forEach((x) => {
+            let days = 5 - (Date.parse(x.deadLine) - Date.now()) / 1000 / 3600 / 24;
+            x.mark = x.importance * 3 + (days > 0 ? days : 0);
+        });
+        result = result.sort((x, y) => y.mark - x.mark);
+    }
+    ctx.set({ pages: Math.ceil((result.length - 1) / 50) });
+    if (ctx.query.page > 0) {
+        let page = ctx.query.page;
+        result = result.slice(50 * (page - 1), 50)
+    }
+    ctx.body = result;
 });
 
 api.post('/tasks', async ctx => {

@@ -24,13 +24,13 @@ function createMainWindow() {
         frame: false,
         skipTaskbar: true
     });
-    // 启动开发工具
-    if (global.config.dev) mainWindow.openDevTools();
     // 加载主窗口
     mainWindow.loadURL('file://' + __dirname + '/windows/main.html');
     // 失去焦点时隐藏
     mainWindow.on('blur', () => {
-        mainWindow.hide();
+        if (global.config.pinned != true) {
+            mainWindow.hide();
+        }
     });
 };
 
@@ -74,9 +74,9 @@ function getMainWindowBounds(bounds) {
     // 原始窗口位置：400x600,在图标的中间上方
     let windowBounds = {
         width: 400,
-        height: 600,
+        height: 700,
         x: bounds.x + bounds.width / 2 - 200,
-        y: bounds.y - 600
+        y: bounds.y - 700
     };
     // 如果超出左侧区域调整窗口位置
     if (windowBounds.x < screenArea.x) {
@@ -100,6 +100,24 @@ function getMainWindowBounds(bounds) {
 function createContextMenu() {
     // 创建上下文菜单
     let menu = electron.Menu.buildFromTemplate([{
+        label: '打开调试工具',
+        type: 'normal',
+        click: () => {
+            mainWindow.openDevTools();
+        }
+    }, {
+        label: '作者主页',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://novashang.com")
+        }
+    }, {
+        label: '项目主页',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://tododo.novashang.com/")
+        }
+    }, {
         label: '退出',
         type: 'normal',
         click: () => {
