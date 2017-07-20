@@ -1,0 +1,24 @@
+{
+    "name": "nova-electron-util",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build-win": "cross-env electron-packager ./app --out ./release --icon  --platform win32"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NovaShang/tododo.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/NovaShang/tododo/issues"
+    },
+    "homepage": "https://github.com/NovaShang/tododo#readme",
+    "devDependencies": {
+        "cross-env": "^5.0.1",
+        "electron-packager": "^8.7.2"
+    }
+}

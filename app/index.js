@@ -47,7 +47,6 @@ function showLoginWindow() {
         width: 500
     });
     loginWindow.setMenuBarVisibility(false);
-    loginWindow.openDevTools();
     loginWindow.loadURL('file://' + __dirname + '/windows/login.html')
     loginWindow.show();
     loginWindow.result = false;
@@ -106,6 +105,14 @@ function createContextMenu() {
             mainWindow.openDevTools();
         }
     }, {
+        label: '获取本项目源码',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://github.com/NovaShang/tododo")
+        }
+    }, {
+        type: 'separator'
+    }, {
         label: '作者主页',
         type: 'normal',
         click: () => {
@@ -117,6 +124,14 @@ function createContextMenu() {
         click: () => {
             electron.shell.openExternal("http://tododo.novashang.com/")
         }
+    }, {
+        label: '使用帮助',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://tododo.novashang.com/help")
+        }
+    }, {
+        type: 'separator'
     }, {
         label: '退出',
         type: 'normal',
@@ -146,7 +161,7 @@ function createContextMenu() {
  */
 function createTrayIcon() {
     // 创建系统托盘图标
-    let icon = new electron.Tray("assets/tray.png");
+    let icon = new electron.Tray("./assets/tray.png");
     icon.setContextMenu(createContextMenu());
     // 左键单击按钮时发生
     icon.on('click', (modifiers, bounds) => {

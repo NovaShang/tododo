@@ -380,10 +380,11 @@ textarea {
 
 .tasklist-item .title {
     margin: 0px;
+    margin-top: 2px;
     padding: 0px;
     flex-grow: 1;
     flex-shrink: 1;
-    font-size: 16px;
+    font-size: 14px;
     overflow-x: hidden;
     white-space: nowrap;
     width: 10px;

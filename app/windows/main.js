@@ -128,7 +128,7 @@ const app = new Vue({
          */
         refreshTask: async function(task) {
             let data = await resTask.query({ id: task.id });
-            convertDatesInTask(task);
+            convertDatesInTask(data.body);
             Object.assign(task, data.body);
         },
         /**
