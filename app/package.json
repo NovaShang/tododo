@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "start": "./node_modules/.bin/electron index.js",
-        "start-server": "node ./server/index.js",
+        "start-server": "node ./server/index.js run",
         "migrate": "node ./server/index.js migrate"
     },
     "author": "",

@@ -1,6 +1,7 @@
 // 导入模块
 const electron = require('electron');
 const fs = require('fs');
+const localServer = require('./server/index.js');
 // 读取配置文件
 global.config = JSON.parse(fs.readFileSync('./config.json').toString());
 global.token = "";
@@ -10,6 +11,16 @@ let mainWindow, loginWindow, settingWindow, loginMenuItem, logoutMenuItem;
 
 function login() {
 
+}
+
+function init() {
+    if (config.localServer === true) {
+        try {
+            localServer(config.port);
+        } catch (e) {
+            electron.dialog.showErrorBox("本地服务启动失败", "本地服务启动失败，请检查端口号设置是否可用。")
+        }
+    }
 }
 
 /**

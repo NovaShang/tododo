@@ -1,7 +1,1 @@
-{
-    "server": "http://localhost:1231/api",
-    "dev": true,
-    "token": "986501306c7111e78b34cbe8934a9f12",
-    "local": true,
-    "pinned": false
-}
+{ "server": "http://tododo.novashang.com/api", "dev": true, "token": "6e70ac706d6211e79af8f742ac2067be", "local": true, "pinned": false }
