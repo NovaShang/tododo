@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build-win": "cross-env electron-packager ./app --out ./release --icon  --platform win32"
+        "build-win": "cross-env electron-packager ./app --out ./release --icon ./app/icon/icon.ico --platform win32"
     },
     "repository": {
         "type": "git",

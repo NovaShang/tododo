@@ -3,8 +3,8 @@ const electron = require('electron');
 require('vue-resource')(Vue);
 const config = electron.remote.getGlobal('config');
 const currentWindow = electron.remote.getCurrentWindow();
-const server = electron.remote.require('nova-tododo-server');
-electron.remote.getCurrentWindow().openDevTools();
+//const server = electron.remote.require('nova-tododo-server');
+//electron.remote.getCurrentWindow().openDevTools();
 
 const app = new Vue({
     el: "#app",

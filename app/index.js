@@ -1,25 +1,12 @@
 // 导入模块
 const electron = require('electron');
 const fs = require('fs');
-const server = require('nova-tododo-server');
 // 读取配置文件
 global.config = JSON.parse(fs.readFileSync('./config.json').toString());
 // 窗口变量
 let icon,mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
 
 
-function init() {
-    if (config.localServer === true) {
-        try {
-            localServer(config.port);
-        } catch (e) {
-            electron.dialog.showErrorBox("本地服务启动失败", "本地服务启动失败，请检查端口号设置是否可用。")
-        }
-    }
-}
-
-function startLocalServer(){
-}
 
 /**
  * 创建主窗口
@@ -172,7 +159,7 @@ function createContextMenu() {
  */
 function createTrayIcon() {
     // 创建系统托盘图标
-    icon = new electron.Tray("./assets/tray.png");
+    icon = new electron.Tray(__dirname+"/assets/tray.png");
     icon.setContextMenu(createContextMenu());
     // 左键单击按钮时发生
     icon.on('click', (modifiers, bounds) => {
