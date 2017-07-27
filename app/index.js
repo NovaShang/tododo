@@ -1,17 +1,12 @@
 // 导入模块
 const electron = require('electron');
 const fs = require('fs');
-const localServer = require('./server/index.js');
+const server = require('nova-tododo-server');
 // 读取配置文件
 global.config = JSON.parse(fs.readFileSync('./config.json').toString());
-global.token = "";
 // 窗口变量
-let mainWindow, loginWindow, settingWindow, loginMenuItem, logoutMenuItem;
+let icon,mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
 
-
-function login() {
-
-}
 
 function init() {
     if (config.localServer === true) {
@@ -23,6 +18,9 @@ function init() {
     }
 }
 
+function startLocalServer(){
+}
+
 /**
  * 创建主窗口
  */
@@ -31,12 +29,12 @@ function createMainWindow() {
     mainWindow = new electron.BrowserWindow({
         resizable: false,
         movable: false,
-        show: false,
+        show: true,
         frame: false,
-        skipTaskbar: true
+        skipTaskbar: true,
     });
     // 加载主窗口
-    mainWindow.loadURL('file://' + __dirname + '/windows/main.html');
+    mainWindow.loadURL('file://' + __dirname + '/main.html');
     // 失去焦点时隐藏
     mainWindow.on('blur', () => {
         if (global.config.pinned != true) {
@@ -53,19 +51,19 @@ function showLoginWindow() {
         resizable: false,
         maximizable: false,
         minimizable: false,
-        show: false,
-        height: 400,
-        width: 500
+        height: 370,
+        width: 400,
+        frame:false
     });
     loginWindow.setMenuBarVisibility(false);
-    loginWindow.loadURL('file://' + __dirname + '/windows/login.html')
+    loginWindow.loadURL('file://' + __dirname + '/login.html')
     loginWindow.show();
     loginWindow.result = false;
     loginWindow.once("close", () => {
         if (loginWindow.result == true) {
             mainWindow.reload();
         } else {
-
+            electron.app.quit();
         }
 
     })
@@ -85,7 +83,8 @@ function getMainWindowBounds(bounds) {
     let windowBounds = {
         width: 400,
         height: 700,
-        x: bounds.x + bounds.width / 2 - 200,
+        // 如果不是整数设置窗口边界时会报错
+        x: bounds.x + Math.floor(bounds.width / 2) - 200,
         y: bounds.y - 700
     };
     // 如果超出左侧区域调整窗口位置
@@ -100,6 +99,7 @@ function getMainWindowBounds(bounds) {
     if (bounds.y - screenArea.y < screenArea.y + screenArea.height - bounds.y) {
         windowBounds.y = bounds.y + bounds.height
     }
+    
     return windowBounds;
 }
 
@@ -172,12 +172,13 @@ function createContextMenu() {
  */
 function createTrayIcon() {
     // 创建系统托盘图标
-    let icon = new electron.Tray("./assets/tray.png");
+    icon = new electron.Tray("./assets/tray.png");
     icon.setContextMenu(createContextMenu());
     // 左键单击按钮时发生
     icon.on('click', (modifiers, bounds) => {
         // 获得窗口应该显示的区域
         let windowBounds = getMainWindowBounds(bounds);
+        console.log(windowBounds);
         // 应用该区域
         mainWindow.setBounds(windowBounds);
         // 显示窗口
@@ -187,6 +188,9 @@ function createTrayIcon() {
 
 // 程序启动完成时
 electron.app.on('ready', () => {
+    electron.app.makeSingleInstance((x)=>{
+        mainWindow.show();
+    });
     createMainWindow();
     showLoginWindow();
     createTrayIcon();

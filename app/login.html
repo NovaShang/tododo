@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./stylesheet.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 功能区 -->
+        <div class="function-area">
+            <!-- 标题栏 -->
+            <div class="title-bar">
+                <!-- 窗口标题 -->
+                <div class="title">
+                    <span class="brand">登陆 ToDoDo</span>
+                </div>
+                <!-- 窗口控制按钮 -->
+                <div class="control-box">
+                    <button @click="cancel"><img src="./assets/close.svg"></button>
+                </div>
+            </div>
+        </div>
+        <!-- 登陆现有账号 -->
+        <div v-bind:class="['tasklist-item','tasklist-item-singleline',{'tasklist-item-expand-small':method==='login'}]" @click="method='login'">
+            <button class="checkbox checkbox-blue"><div v-bind:class="['solid',{'checked':method==='login'}]" ></div> </button>
+            <div class="content">
+                <div class="row">
+                    <div class="title">使用现有账号登陆</div>
+                </div>
+                <div class="col" v-show="method==='login'">
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>邮箱：</label>
+                            <input type="text" class="major" v-model="email" placeholder="example@blabla.com">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>密码：</label>
+                            <input type="password" class="major" v-model="password">
+                        </div>
+                    </div>
+                    <div class="row alert" v-show="error!=''">
+                        {{error}}
+                    </div>
+                    <div class="row" v-show="message!=''">
+                        {{message}}
+                    </div>
+                    <div class="row">
+                        <button class="outline-button outline-button-large outline-button-blue" @click="login">登陆</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-bind:class="['tasklist-item','tasklist-item-singleline',{'tasklist-item-expand-small':method==='register'}]" @click="method='register'">
+            <button class="checkbox checkbox-blue"><div v-bind:class="['solid',{'checked':method==='register'}]" ></div> </button>
+            <div class="content">
+                <div class="row">
+                    <div class="title">注册新的账号</div>
+                </div>
+                <div class="col" v-show="method==='register'">
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>邮箱：</label>
+                            <input type="text" v-model="email" class="major" placeholder="example@boo.com">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>密码：</label>
+                            <input type="password" class="major" v-model="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>确认密码：</label>
+                            <input type="password" class="major" v-model="passwordRepeat">
+                        </div>
+                    </div>
+                    <div class="row alert" v-show="error!=''">
+                        {{error}}
+                    </div>
+                    <div class="row">
+                        <button class="outline-button outline-button-large outline-button-blue" @click="register">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-bind:class="['tasklist-item','tasklist-item-singleline',{'tasklist-item-expand-small':method==='local'}]">
+            <button class="checkbox checkbox-blue"><div v-bind:class="['solid',{'checked':method==='local'}]" ></div> </button>
+            <div class="content">
+                <div class="row">
+                    <div class="title">离线使用(未完成)</div>
+                </div>
+                <div class="col" v-show="method==='local'">
+                    <div class="p">
+                        离线模式下无法使用云同步功能。你可以使用其他tododo客户端连接到此电脑的数据库。<a href="tododo.novashang.com/help">帮助</a>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-normal major">
+                            <label>数据库：</label>
+                            <input type="text" class="major" v-model="dbPath">
+                            <button class="outline-button outline-button-blue" @click="browse">浏览</button>
+                        </div>
+                    </div>
+                    <div class="row alert" v-show="error!=''">
+                        {{error}}
+                    </div>
+                    <div class="row">
+                        <button class="outline-button  outline-button-large outline-button-blue" @click="startLocal">启动</button>
+                        <button class="outline-button  outline-button-large" @click="startLocal">仅启动服务</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./login.js"></script>
+</body>
+
+</html>

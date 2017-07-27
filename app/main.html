@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./stylesheet.css">
 </head>
 
 <body>
@@ -17,8 +17,8 @@
                 </div>
                 <!-- 窗口控制按钮 -->
                 <div class="control-box">
-                    <button @click="pin()" v-show="!pinned"><img src="../assets/pin.svg"></button>
-                    <button @click="close()" v-show="pinned"><img src="../assets/close.svg"></button>
+                    <button @click="pin()" v-show="!pinned"><img src="./assets/pin.svg"></button>
+                    <button @click="close()" v-show="pinned"><img src="./assets/close.svg"></button>
                 </div>
             </div>
             <!-- 添加任务操作区域 -->
@@ -28,9 +28,9 @@
                     <!-- 任务名称 -->
                     <input type="text" v-model="newTask.title" class="major input" placeholder="添加新任务">
                     <!-- 展开全部选项 -->
-                    <button @click="newTask.showExtra=!newTask.showExtra"><img v-bind:class="{'rotation180':newTask.showExtra}" src="../assets/down.svg"></button>
+                    <button @click="newTask.showExtra=!newTask.showExtra"><img v-bind:class="{'rotation180':newTask.showExtra}" src="./assets/down.svg"></button>
                     <!-- 添加任务 -->
-                    <button @click="addTask()"><img src="../assets/add.svg"></button>
+                    <button @click="addTask()"><img src="./assets/add.svg"></button>
                 </div>
                 <!-- 默认隐藏的部分 -->
                 <div v-bind:class="['col','add-task-panel',{'add-task-panel-expanded':newTask.showExtra}]">
@@ -49,11 +49,11 @@
             <!-- 标签栏 -->
             <div class="tab-bar">
                 <!-- 任务列表 -->
-                <button v-bind:class="{'active':currentModel=='tasklist'}" @click="currentModel='tasklist'"><img src="../assets/tasklist.svg"></button>
+                <button v-bind:class="{'active':currentModel=='tasklist'}" @click="currentModel='tasklist'"><img src="./assets/tasklist.svg"></button>
                 <!-- 所有任务 -->
-                <button v-bind:class="{'active':currentModel=='alltask'}" @click="currentModel='alltask';refreshAllTasks();"><img src="../assets/all.svg"></button>
+                <button v-bind:class="{'active':currentModel=='alltask'}" @click="currentModel='alltask';refreshAllTasks();"><img src="./assets/all.svg"></button>
                 <!-- 设置 -->
-                <button v-bind:class="{'active':currentModel=='setting'}" @click="currentModel='setting'"><img src="../assets/setting.svg"></button>
+                <button v-bind:class="{'active':currentModel=='setting'}" @click="currentModel='setting'"><img src="./assets/setting.svg"></button>
             </div>
         </div>
         <!-- 窗口内容区域 -->
@@ -109,13 +109,13 @@
         </div>
         <div class="toolbar" v-show="currentModel=='alltask'">
             <div class="row">
-                <button class="toobar-button" @click="allTask.showDone=!allTask.showDone;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showDone" src="../assets/yes.svg"><img v-show="!allTask.showDone" src="../assets/no.svg">已完成</button>
-                <button class="toobar-button" @click="allTask.showUndone=!allTask.showUndone;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showUndone" src="../assets/yes.svg"><img v-show="!allTask.showUndone" src="../assets/no.svg">未完成</button>
-                <button class="toobar-button" @click="allTask.showCanceled=!allTask.showCanceled;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showCanceled" src="../assets/yes.svg"><img v-show="!allTask.showCanceled" src="../assets/no.svg">已取消</button>
+                <button class="toobar-button" @click="allTask.showDone=!allTask.showDone;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showDone" src="./assets/yes.svg"><img v-show="!allTask.showDone" src="./assets/no.svg">已完成</button>
+                <button class="toobar-button" @click="allTask.showUndone=!allTask.showUndone;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showUndone" src="./assets/yes.svg"><img v-show="!allTask.showUndone" src="./assets/no.svg">未完成</button>
+                <button class="toobar-button" @click="allTask.showCanceled=!allTask.showCanceled;allTask.currentPage=1;refreshAllTasks()"><img v-show="allTask.showCanceled" src="./assets/yes.svg"><img v-show="!allTask.showCanceled" src="./assets/no.svg">已取消</button>
                 <div class="toolbar-pagger">
-                    <button class="toobar-button" @click="allTaskPrePage"><img src="../assets/pre.svg"></button>
+                    <button class="toobar-button" @click="allTaskPrePage"><img src="./assets/pre.svg"></button>
                     <div class="">{{allTask.currentPage}}/{{allTask.totalPage}}</div>
-                    <button class="toobar-button" @click="allTaskNextPage"><img src="../assets/next.svg"></button>
+                    <button class="toobar-button" @click="allTaskNextPage"><img src="./assets/next.svg"></button>
                 </div>
 
             </div>

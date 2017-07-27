@@ -1,5 +1,5 @@
 //载入外部引用
-const Vue = require('../node_modules/vue/dist/vue.js');
+const Vue = require('./node_modules/vue/dist/vue.js');
 const electron = require('electron');
 const _ = require('lodash');
 require('date-utils');
@@ -14,7 +14,7 @@ Vue.http.interceptors.push(function(request, next) {
     next(resp => resp);
 });
 // 创建资源
-const resTask = Vue.resource(config.server + '/tasks{/id}');
+const resTask = Vue.resource(config.host + '/tasks{/id}');
 
 // 日期格式转换函数
 const convertDate = function(datestr) {

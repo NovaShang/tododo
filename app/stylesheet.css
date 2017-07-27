@@ -10,6 +10,7 @@ body {
 }
 
 input,
+button,
 textarea,
 body {
     font-family: '微软雅黑', Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
@@ -31,10 +32,11 @@ textarea {
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    padding: 5px;
 }
 
 .col {
-    padding: 10px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -48,14 +50,17 @@ textarea {
 }
 
 
+
+
 /* 输入控件组 */
 
 .input-group {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-.input-group>.major {
+.major {
     flex-grow: 1;
 }
 
@@ -146,6 +151,13 @@ textarea {
     transition: all 0.2s;
 }
 
+.outline-button-large{
+   display:inline;
+   padding:5px 10px;
+   font-size:16px; 
+    
+}
+
 .outline-button-blue {
     border: 1px solid #1379BE;
     color: #1379BE;
@@ -175,6 +187,14 @@ textarea {
 .outline-button-red:hover {
     color: white;
     background-color: rgb(200, 72, 74);
+}
+
+.alert{
+    background-color: rgb(200, 72, 74);
+    color: white;
+    border-radius: 3px;
+    padding:3px 5px;
+    margin: 0px 10px;
 }
 
 
@@ -311,7 +331,11 @@ textarea {
     flex-direction: row;
     align-items: stretch;
     border: 1px solid #CCC;
-    transition: all 0.4s;
+    transition: all 0.2s;
+}
+
+.tasklist-item>.content>.row{
+    padding: 0px;
 }
 
 .tasklist-item:hover {
@@ -328,6 +352,11 @@ textarea {
 
 .tasklist-item-expand {
     height: 280px;
+}
+
+
+.tasklist-item-expand-small {
+    height: 200px;
 }
 
 .tasklist-item>.checkbox {
@@ -359,17 +388,19 @@ textarea {
 .tasklist-item>.checkbox>.solid {
     background: linear-gradient(to right, #1379BE, #2B9DAA);
     opacity: 0;
-    height: 0px;
-    width: 0px;
-    margin: auto;
-    border-radius: 3px;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    border: 10px solid #F5F5F5;
+    border-radius: 10px;
+    box-sizing: border-box;
     transition: all 0.4s;
 }
 
 .tasklist-item>.checkbox>.checked {
     opacity: 100;
-    height: 80%;
-    width: 80%;
+    border-width: 3px;
+    border-radius: 5px;
 }
 
 .tasklist-item .content {
