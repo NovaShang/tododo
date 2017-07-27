@@ -8,6 +8,12 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
+            "program": "${file}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Electron Main",
             "program": "${workspaceRoot}\\app\\index.js",
             "cwd": "${workspaceRoot}\\app",
             "runtimeExecutable": "${workspaceRoot}\\app\\node_modules\\.bin\\electron",
