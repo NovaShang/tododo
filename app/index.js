@@ -4,7 +4,7 @@ const fs = require('fs');
 // 读取配置文件
 global.config = JSON.parse(fs.readFileSync('./config.json').toString());
 // 窗口变量
-let icon,mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
+let icon, mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
 
 
 
@@ -16,7 +16,7 @@ function createMainWindow() {
     mainWindow = new electron.BrowserWindow({
         resizable: false,
         movable: false,
-        show: true,
+        show: false,
         frame: false,
         skipTaskbar: true,
     });
@@ -40,7 +40,7 @@ function showLoginWindow() {
         minimizable: false,
         height: 370,
         width: 400,
-        frame:false
+        frame: false
     });
     loginWindow.setMenuBarVisibility(false);
     loginWindow.loadURL('file://' + __dirname + '/login.html')
@@ -48,7 +48,7 @@ function showLoginWindow() {
     loginWindow.result = false;
     loginWindow.once("close", () => {
         if (loginWindow.result == true) {
-            mainWindow.reload();
+            afterLogin();
         } else {
             electron.app.quit();
         }
@@ -86,7 +86,7 @@ function getMainWindowBounds(bounds) {
     if (bounds.y - screenArea.y < screenArea.y + screenArea.height - bounds.y) {
         windowBounds.y = bounds.y + bounds.height
     }
-    
+
     return windowBounds;
 }
 
@@ -147,7 +147,7 @@ function createContextMenu() {
     logoutMenuItem = new electron.MenuItem({
         label: '登出',
         type: 'normal',
-        click: () => {}
+        click: () => { }
     });
 
 
@@ -159,7 +159,7 @@ function createContextMenu() {
  */
 function createTrayIcon() {
     // 创建系统托盘图标
-    icon = new electron.Tray(__dirname+"/assets/tray.png");
+    icon = new electron.Tray(__dirname + "/assets/tray.png");
     icon.setContextMenu(createContextMenu());
     // 左键单击按钮时发生
     icon.on('click', (modifiers, bounds) => {
@@ -173,14 +173,25 @@ function createTrayIcon() {
     });
 };
 
+// 登陆后
+function afterLogin() {
+    createMainWindow();
+    createTrayIcon();
+}
+
+// 设置为单例模式
+const shouldQuit = electron.app.makeSingleInstance((commandLine, workingDirectory) => {
+    if (mainWindow) {
+        mainWindow.show();
+    }
+});
+if(shouldQuit){
+    electron.app.quit();
+}
+
 // 程序启动完成时
 electron.app.on('ready', () => {
-    electron.app.makeSingleInstance((x)=>{
-        mainWindow.show();
-    });
-    createMainWindow();
     showLoginWindow();
-    createTrayIcon();
 });
 
 // 程序退出时
