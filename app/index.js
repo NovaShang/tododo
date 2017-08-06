@@ -1,8 +1,18 @@
 // 导入模块
 const electron = require('electron');
 const fs = require('fs');
+
+// 处理Squirrel事件
+if (require('electron-squirrel-startup')) electron.app.quit();
+
+
 // 读取配置文件
-global.config = JSON.parse(fs.readFileSync('./config.json').toString());
+global.config = {
+    "host": "http://tododo.novashang.com/api",
+    "remoteHost": "http://tododo.novashang.com/api",
+    "token": "",
+    "pinned": false,
+};
 // 窗口变量
 let icon, mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
 
@@ -147,7 +157,7 @@ function createContextMenu() {
     logoutMenuItem = new electron.MenuItem({
         label: '登出',
         type: 'normal',
-        click: () => { }
+        click: () => {}
     });
 
 
@@ -185,7 +195,7 @@ const shouldQuit = electron.app.makeSingleInstance((commandLine, workingDirector
         mainWindow.show();
     }
 });
-if(shouldQuit){
+if (shouldQuit) {
     electron.app.quit();
 }
 
@@ -196,5 +206,5 @@ electron.app.on('ready', () => {
 
 // 程序退出时
 electron.app.on('before-quit', () => {
-    fs.writeFileSync('./config.json', JSON.stringify(config));
+    //fs.writeFileSync('./config.json', JSON.stringify(config));
 })

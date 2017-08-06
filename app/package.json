@@ -1,24 +1,25 @@
 {
-    "productName": "ToDoDo",
-    "name": "tododo-client",
-    "version": "0.9.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "./node_modules/.bin/electron index.js",
-        "start-server": "node ./server/index.js run",
-        "migrate": "node ./server/index.js migrate"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "crypto": "0.0.3",
-        "date-utils": "^1.2.21",
-        "lodash": "^4.17.4",
-        "vue": "^2.3.4",
-        "vue-resource": "^1.3.4"
-    },
-    "devDependencies": {
-        "electron": "^1.6.11"
-    }
+  "productName": "ToDoDo",
+  "name": "tododo-client",
+  "version": "0.9.1",
+  "description": "Client of ToDoDo, an online todo list service.",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron index.js",
+    "start-server": "node ./server/index.js run",
+    "migrate": "node ./server/index.js migrate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "0.0.3",
+    "date-utils": "^1.2.21",
+    "electron-squirrel-startup": "^1.0.0",
+    "lodash": "^4.17.4",
+    "vue": "^2.3.4",
+    "vue-resource": "^1.3.4"
+  },
+  "devDependencies": {
+    "electron": "^1.6.11"
+  }
 }
