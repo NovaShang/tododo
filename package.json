@@ -5,7 +5,10 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build-win": "cross-env electron-packager ./app --out ./release --icon ./app/icon/icon.ico --platform win32 --arch ia32 --asar"
+        "build-win": "cross-env electron-packager ./app ToDoDo --out ./release --icon ./app/icon/icon.ico --platform win32 --arch ia32 --asar --version-string.CompanyName=\"Nova\" --version-string.ProductName=\"ToDoDo\"",
+        "build-osx": "cross-env electron-packager ./app  ToDoDo --out ./release --icon ./app/icon/icon.png --platform darwin --arch x64 --asar --version-string.CompanyName=\"Nova\" --version-string.ProductName=\"ToDoDo\"",
+        "make-installer": "cross-env node make-window-installer.js",
+        "make-dwg": "cross-env electron-installer-dmg ./release/ToDoDo-darwin-x64/ToDoDo.app ToDoDo"
     },
     "repository": {
         "type": "git",
@@ -19,6 +22,7 @@
     "homepage": "https://github.com/NovaShang/tododo#readme",
     "devDependencies": {
         "cross-env": "^5.0.1",
+        "electron-installer-dmg": "^0.2.1",
         "electron-packager": "^8.7.2",
         "electron-winstaller": "^2.6.3"
     }

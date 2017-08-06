@@ -6,6 +6,7 @@
 
 <body>
     <div id="app">
+
         <!-- 功能区 -->
         <div class="function-area">
             <!-- 标题栏 -->
@@ -19,6 +20,11 @@
                     <button @click="cancel"><img src="./assets/close.svg"></button>
                 </div>
             </div>
+        </div>
+        <div class="overlay" v-show="processing">
+            <img style="margin-top:100px;" class="spinner" src="./assets/spinner.svg">
+            <div>请等待</div>
+
         </div>
         <!-- 登陆现有账号 -->
         <div v-bind:class="['tasklist-item','tasklist-item-singleline',{'tasklist-item-expand-small':method==='login'}]" @click="method='login'">
@@ -46,8 +52,9 @@
                     <div class="row" v-show="message!=''">
                         {{message}}
                     </div>
-                    <div class="row">
+                    <div class="row" style="align-items:center">
                         <button class="outline-button outline-button-large outline-button-blue" @click="login">登陆</button>
+                        <input v-model="autoLogin" type="checkbox">自动登陆
                     </div>
                 </div>
             </div>

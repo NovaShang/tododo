@@ -1,9 +1,7 @@
 // 导入模块
 const electron = require('electron');
 const fs = require('fs');
-
-// 处理Squirrel事件
-if (require('electron-squirrel-startup')) electron.app.quit();
+const path = require('path');
 
 
 // 读取配置文件
@@ -12,11 +10,23 @@ global.config = {
     "remoteHost": "http://tododo.novashang.com/api",
     "token": "",
     "pinned": false,
+    "autoLogin": false,
+    "email": "",
+    "password": ""
 };
+
+let confDir = electron.app.getPath('userData');
+let confPath = path.join(confDir, 'config.json');
+if (!fs.existsSync(confDir)) {
+    fs.mkdirSync(confDir);
+}
+if (!fs.existsSync(confPath)) {
+    fs.writeFileSync(confPath, JSON.stringify(global.config));
+}
+Object.assign(global.config, JSON.parse(fs.readFileSync(confPath)));
+
 // 窗口变量
 let icon, mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
-
-
 
 /**
  * 创建主窗口
@@ -141,26 +151,23 @@ function createContextMenu() {
     }, {
         type: 'separator'
     }, {
+        label: '登出',
+        type: 'normal',
+        click: () => {
+            global.config.autoLogin = false;
+            global.config.password = "";
+            global.config.email = "";
+            showLoginWindow();
+            mainWindow.destroy();
+            icon.destroy();
+        }
+    }, {
         label: '退出',
         type: 'normal',
         click: () => {
             electron.app.quit();
         }
     }]);
-    loginMenuItem = new electron.MenuItem({
-        label: '登陆',
-        type: 'normal',
-        click: () => {
-            loginWindow.show();
-        }
-    });
-    logoutMenuItem = new electron.MenuItem({
-        label: '登出',
-        type: 'normal',
-        click: () => {}
-    });
-
-
     return menu;
 };
 
@@ -170,6 +177,7 @@ function createContextMenu() {
 function createTrayIcon() {
     // 创建系统托盘图标
     icon = new electron.Tray(__dirname + "/assets/tray.png");
+    // 设置右键菜单
     icon.setContextMenu(createContextMenu());
     // 左键单击按钮时发生
     icon.on('click', (modifiers, bounds) => {
@@ -199,12 +207,19 @@ if (shouldQuit) {
     electron.app.quit();
 }
 
+
+
 // 程序启动完成时
 electron.app.on('ready', () => {
-    showLoginWindow();
-});
+    if (require('electron-squirrel-startup')) {
+        electron.app.exit();
 
+    } else {
+        showLoginWindow();
+    }
+});
 // 程序退出时
 electron.app.on('before-quit', () => {
-    //fs.writeFileSync('./config.json', JSON.stringify(config));
+    fs.writeFileSync(confPath, JSON.stringify(config));
 })
+

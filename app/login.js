@@ -17,6 +17,14 @@ const app = new Vue({
         processing: false,
         method: 'login',
         dbPath: config.dbPath,
+        autoLogin: false
+    },
+    created: async function () {
+        if (config.autoLogin) {
+            this.email = config.email;
+            this.password = config.password;
+            this.login();
+        }
     },
     methods: {
         login: async function () {
@@ -29,6 +37,11 @@ const app = new Vue({
                     email: this.email,
                     password: this.password
                 });
+                if(this.autoLogin){
+                    config.email=this.email;
+                    config.password=this.password;
+                    config.autoLogin=true;
+                }
                 config.token = data.body.token;
                 currentWindow.result = true;
                 currentWindow.close();
