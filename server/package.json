@@ -1,0 +1,33 @@
+{
+    "name": "nova-tododo-server",
+    "version": "1.0.0",
+    "description": "Server for nova-tododo",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js start-server",
+        "migrate": "node index.js migrate"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NovaShang/nova-tododo-server.git"
+    },
+    "keywords": [
+        "tododo",
+        "koa"
+    ],
+    "author": "nova",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/NovaShang/nova-tododo-server/issues"
+    },
+    "homepage": "https://github.com/NovaShang/nova-tododo-server#readme",
+    "dependencies": {
+        "crypto": "0.0.3",
+        "koa": "^2.2.0",
+        "koa-bodyparser": "^4.2.0",
+        "koa-router": "^7.2.1",
+        "sequelize": "^4.4.0",
+        "sqlite3": "^3.1.8"
+    }
+}

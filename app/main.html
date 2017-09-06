@@ -49,10 +49,10 @@
             <!-- 标签栏 -->
             <div class="tab-bar">
                 <!-- 任务列表 -->
-                <button v-bind:class="{'active':currentModel=='tasklist'}" @click="currentModel='tasklist'"><img src="./assets/tasklist.svg"></button>
+                <button v-bind:class="{'active':currentModel=='tasklist'}" @click="currentModel='tasklist';refreshTaskList()"><img src="./assets/tasklist.svg"></button>
                 <!-- 所有任务 -->
                 <button v-bind:class="{'active':currentModel=='alltask'}" @click="currentModel='alltask';refreshAllTasks();"><img src="./assets/all.svg"></button>
-                 <!-- 设置 
+                <!-- 设置 
                 <button v-bind:class="{'active':currentModel=='setting'}" @click="currentModel='setting'"><img src="./assets/setting.svg"></button> -->
             </div>
         </div>
