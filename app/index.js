@@ -3,33 +3,34 @@ const electron = require('electron');
 const fs = require('fs');
 const path = require('path');
 const AutoLaunch = require("auto-launch");
-const autoLaunch = new AutoLaunch({
-    name: 'ToDoDo',
-    path: path.resolve(__dirname, '../ToDoDo.exe')
-});
-// 读取配置文件
-global.config = {
-    "host": "http://tododo.novashang.com/api",
-    "remoteHost": "http://tododo.novashang.com/api",
-    "token": "",
-    "pinned": false,
-    "autoLogin": false,
-    "email": "",
-    "password": ""
-};
-
-let confDir = electron.app.getPath('userData');
-let confPath = path.join(confDir, 'config.json');
-if (!fs.existsSync(confDir)) {
-    fs.mkdirSync(confDir);
-}
-if (!fs.existsSync(confPath)) {
-    fs.writeFileSync(confPath, JSON.stringify(global.config));
-}
-Object.assign(global.config, JSON.parse(fs.readFileSync(confPath)));
 
 // 窗口变量
 let icon, mainWindow, loginWindow, loginMenuItem, logoutMenuItem;
+
+/**
+ * 读取配置文件
+ */
+function readConfig() {
+    global.config = {
+        "host": "http://tododo.novashang.com/api",
+        "remoteHost": "http://tododo.novashang.com/api",
+        "token": "",
+        "pinned": false,
+        "autoLogin": false,
+        "email": "",
+        "password": ""
+    };
+    let confDir = electron.app.getPath('userData');
+    let confPath = path.join(confDir, 'config.json');
+    if (!fs.existsSync(confDir)) {
+        fs.mkdirSync(confDir);
+    }
+    if (!fs.existsSync(confPath)) {
+        fs.writeFileSync(confPath, JSON.stringify(global.config));
+    }
+    Object.assign(global.config, JSON.parse(fs.readFileSync(confPath)));
+}
+
 
 /**
  * 创建主窗口
@@ -52,6 +53,7 @@ function createMainWindow() {
         }
     });
 };
+
 
 /**
  * 显示登陆窗口
@@ -78,6 +80,7 @@ function showLoginWindow() {
 
     })
 }
+
 
 /**
  * 根据托盘图标的位置计算窗口的显示位置。
@@ -118,73 +121,76 @@ function getMainWindowBounds(bounds) {
  * 创建上下文菜单
  */
 function createContextMenu() {
+    let autoLaunch = new AutoLaunch({
+        name: 'ToDoDo',
+        path: path.resolve(__dirname, '../ToDoDo.exe')
+    });
     // 创建上下文菜单
     let menu = electron.Menu.buildFromTemplate([{
-            label: '打开调试工具',
-            type: 'normal',
-            click: () => {
-                mainWindow.openDevTools();
-            }
-        }, {
-            label: '获取本项目源码',
-            type: 'normal',
-            click: () => {
-                electron.shell.openExternal("http://github.com/NovaShang/tododo")
-            }
-        }, {
-            type: 'separator'
-        }, {
-            label: '开机自启动',
-            type: 'checkbox',
-            checked: autoLaunch.isEnabled(),
-            click: (item) => {
-                if (item.checked) autoLaunch.enable();
-                else autoLaunch.disable();
-            }
-        },
-        {
-            type: 'separator'
-        }, {
-            label: '作者主页',
-            type: 'normal',
-            click: () => {
-                electron.shell.openExternal("http://novashang.com")
-            }
-        }, {
-            label: '项目主页',
-            type: 'normal',
-            click: () => {
-                electron.shell.openExternal("http://tododo.novashang.com/")
-            }
-        }, {
-            label: '使用帮助',
-            type: 'normal',
-            click: () => {
-                electron.shell.openExternal("http://tododo.novashang.com/help")
-            }
-        }, {
-            type: 'separator'
-        }, {
-            label: '登出',
-            type: 'normal',
-            click: () => {
-                global.config.autoLogin = false;
-                global.config.password = "";
-                global.config.email = "";
-                showLoginWindow();
-                mainWindow.destroy();
-                icon.destroy();
-            }
-        }, {
-            label: '退出',
-            type: 'normal',
-            click: () => {
-                electron.app.quit();
-            }
+        label: '打开调试工具',
+        type: 'normal',
+        click: () => {
+            mainWindow.openDevTools();
         }
-    ]);
+    }, {
+        label: '获取本项目源码',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://github.com/NovaShang/tododo")
+        }
+    }, {
+        type: 'separator'
+    }, {
+        label: '开机自启动',
+        type: 'checkbox',
+        checked: autoLaunch.isEnabled(),
+        click: (item) => {
+            if (item.checked) autoLaunch.enable();
+            else autoLaunch.disable();
+        }
+    }, {
+        type: 'separator'
+    }, {
+        label: '作者主页',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://novashang.com")
+        }
+    }, {
+        label: '项目主页',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://tododo.novashang.com/")
+        }
+    }, {
+        label: '使用帮助',
+        type: 'normal',
+        click: () => {
+            electron.shell.openExternal("http://tododo.novashang.com/help")
+        }
+    }, {
+        type: 'separator'
+    }, {
+        label: '登出',
+        type: 'normal',
+        click: () => {
+            global.config.autoLogin = false;
+            global.config.password = "";
+            global.config.email = "";
+            showLoginWindow();
+            mainWindow.destroy();
+            icon.destroy();
+        }
+    }, {
+        label: '退出',
+        type: 'normal',
+        click: () => {
+            electron.app.quit();
+        }
+    }]);
     return menu;
 };
+
 
 /**
  * 创建系统托盘图标
@@ -206,7 +212,10 @@ function createTrayIcon() {
     });
 };
 
-// 登陆后
+
+/**
+ * 登录后操作
+ */
 function afterLogin() {
     createMainWindow();
     createTrayIcon();
@@ -224,6 +233,7 @@ if (shouldQuit) {
 
 // 程序启动完成时
 electron.app.on('ready', () => {
+    readConfig()
     if (require('electron-squirrel-startup')) {
         electron.app.exit();
 
